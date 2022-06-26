@@ -10,9 +10,8 @@ const productSchema = new mongoose.Schema({
   },
   images: [String],
   price: {
-    type: Number, 
-    default: 0,
-    required: true
+    type: String, 
+    default: 'Free'
   },
   shippingPrice: {
     type: Number,

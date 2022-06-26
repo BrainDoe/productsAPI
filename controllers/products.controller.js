@@ -143,7 +143,6 @@ exports.updateProduct = async (req, res, next) => {
   }
 }
 
-
 // DELETE A PRODUCT
 exports.deleteProduct = async (req, res, next) => {
   const { id } = req.params
