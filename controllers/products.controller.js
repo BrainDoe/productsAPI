@@ -1,7 +1,6 @@
 const multer = require('multer')
 const ErrorResponse = require('../utils/errorResponse');
 const Product = require('../models/Product.model');
-const Category = require('../models/Category.model');
 
 
 
@@ -56,14 +55,13 @@ exports.products = async (req, res, next) => {
 
 // POST A PRODUCT
 exports.createProduct = async (req, res, next) => {
-  const {name, description, price, category, countInStock} = req.body
+  const {name, shippingPrice, price  } = req.body
   try {
     // Validate file upload
     const file = req.file
-    // console.log(req.file);
-    if(!file) {
-      return next(new ErrorResponse("Invalid request. Please ensure there is an image in the product you are posting", 400));
-    }
+    // if(!file) {
+    //   return next(new ErrorResponse("Invalid request. Please ensure there is an image in the product you are posting", 400));
+    // }
 
     // Image file path and file name
     const fileName = req.file.filename
@@ -71,11 +69,9 @@ exports.createProduct = async (req, res, next) => {
 
     const product = await Product.create({
       name,
-      description,
       image: `${basePath}${fileName}`, // http://localhost:3000/public/uploads/image-223434.jpeg
       price,
-      category,
-      countInStock
+      shippingPrice
     });
 
     return res.status(200).json({
@@ -107,12 +103,12 @@ exports.product = async (req, res, next) => {
 
 // UPDATE A PRODUCT
 exports.updateProduct = async (req, res, next) => {
-  const {name, description, price, category, countInStock} = req.body;
+  const {name,  price, shippingPrice} = req.body;
   try {
     if(!req.params.id) {
       return next(new ErrorResponse("Please provide a valid id", 400));
     }
-    
+
     const product = await Product.findById(req.params.id)
     if(!product) {
       return next(new ErrorResponse("Product does not exist", 400));
@@ -132,11 +128,9 @@ exports.updateProduct = async (req, res, next) => {
     const updatedProduct = await Product.findByIdAndUpdate(req.params.id, 
       {
         name,
-        description,
         image: imagepath, // http://localhost:3000/public/uploads/image-223434
         price,
-        category,
-        countInStock,
+        shippingPrice
       },  
       {new: true});
 
