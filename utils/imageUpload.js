@@ -5,7 +5,10 @@ const multer = require('multer');
 const FILE_TYPE_MAP = {
   'image/png': 'png',
   'image/jpg': 'jpg',
-  'image/jpeg': 'jpeg'
+  'image/jpeg': 'jpeg',
+  'image/PNG': 'PNG',
+  'image/JPG': 'JPG',
+  'image/JPEG': 'JPEG'
 }
 
 const storage = multer.diskStorage({
