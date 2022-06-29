@@ -104,6 +104,7 @@ exports.product = async (req, res, next) => {
 // UPDATE A PRODUCT
 exports.updateProduct = async (req, res, next) => {
   const {name,  price, shippingPrice} = req.body;
+  console.log(req.file);
   try {
     if(!req.params.id) {
       return next(new ErrorResponse("Please provide a valid id", 400));
@@ -119,6 +120,7 @@ exports.updateProduct = async (req, res, next) => {
 
     if(file) {
       const fileName = file.filename
+      console.log('File name', fileName);
       const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`
       imagepath = `${basePath}${fileName}`
     } else {

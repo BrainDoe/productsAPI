@@ -48,6 +48,7 @@ app.use(hpp());
 
 // Enable CORS
 app.use(cors());
+app.options('*', cors());
 
 // app.use(fileupload());
 
