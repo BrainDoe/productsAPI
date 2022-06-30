@@ -55,21 +55,22 @@ exports.products = async (req, res, next) => {
 
 // POST A PRODUCT
 exports.createProduct = async (req, res, next) => {
-  const {name, shippingPrice, price  } = req.body
+  const {name, shippingPrice, price, image } = req.body
   try {
     // Validate file upload
-    const file = req.file
-    // if(!file) {
-    //   return next(new ErrorResponse("Invalid request. Please ensure there is an image in the product you are posting", 400));
-    // }
+    // const file = req.file
+    // // if(!file) {
+    // //   return next(new ErrorResponse("Invalid request. Please ensure there is an image in the product you are posting", 400));
+    // // }
 
-    // Image file path and file name
-    const fileName = req.file.filename
-    const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
+    // // Image file path and file name
+    // const fileName = req.file.filename
+    // const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
 
     const product = await Product.create({
+      // image: `${basePath}${fileName}`, // http://localhost:3000/public/uploads/image-223434.jpeg
       name,
-      image: `${basePath}${fileName}`, // http://localhost:3000/public/uploads/image-223434.jpeg
+      image,
       price,
       shippingPrice
     });
@@ -103,8 +104,8 @@ exports.product = async (req, res, next) => {
 
 // UPDATE A PRODUCT
 exports.updateProduct = async (req, res, next) => {
-  const {name,  price, shippingPrice} = req.body;
-  console.log(req.file);
+  const {name, image, price, shippingPrice} = req.body;
+  // console.log(req.file);
   try {
     if(!req.params.id) {
       return next(new ErrorResponse("Please provide a valid id", 400));
@@ -115,22 +116,23 @@ exports.updateProduct = async (req, res, next) => {
       return next(new ErrorResponse("Product does not exist", 400));
     }
 
-    const file = req.file
-    let imagepath
+    // const file = req.file
+    // let imagepath
 
-    if(file) {
-      const fileName = file.filename
-      console.log('File name', fileName);
-      const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`
-      imagepath = `${basePath}${fileName}`
-    } else {
-      imagepath = product.image
-    }
+    // if(file) {
+    //   const fileName = file.filename
+    //   console.log('File name', fileName);
+    //   const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`
+    //   imagepath = `${basePath}${fileName}`
+    // } else {
+    //   imagepath = product.image
+    // }
 
     const updatedProduct = await Product.findByIdAndUpdate(req.params.id, 
       {
+        // image: imagepath, // http://localhost:3000/public/uploads/image-223434
         name,
-        image: imagepath, // http://localhost:3000/public/uploads/image-223434
+        image,
         price,
         shippingPrice
       },  
