@@ -55,7 +55,7 @@ exports.products = async (req, res, next) => {
 
 // POST A PRODUCT
 exports.createProduct = async (req, res, next) => {
-  const {name, shippingPrice, price, image } = req.body
+  const {name, images, shippingPrice, price, image } = req.body
   try {
     // Validate file upload
     // const file = req.file
@@ -72,6 +72,7 @@ exports.createProduct = async (req, res, next) => {
       name,
       image,
       price,
+      images,
       shippingPrice
     });
 
@@ -104,7 +105,7 @@ exports.product = async (req, res, next) => {
 
 // UPDATE A PRODUCT
 exports.updateProduct = async (req, res, next) => {
-  const {name, image, price, shippingPrice} = req.body;
+  const {name, images, image, price, shippingPrice} = req.body;
   // console.log(req.file);
   try {
     if(!req.params.id) {
@@ -133,6 +134,7 @@ exports.updateProduct = async (req, res, next) => {
         // image: imagepath, // http://localhost:3000/public/uploads/image-223434
         name,
         image,
+        images,
         price,
         shippingPrice
       },  
